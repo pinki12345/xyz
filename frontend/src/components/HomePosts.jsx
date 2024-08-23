@@ -1,12 +1,18 @@
-
 import { IF } from '../url';
 
 const HomePosts = ({ post }) => {
+
+  console.log("Post", post);
+  console.log("If",IF);
+  const imageUrl = post.photo ? `${IF}${post.photo}` : 'path/to/fallback-image.jpg';
+   console.log("Image URL", imageUrl);
   return (
     <div className="w-full flex mt-8 space-x-4">
     
       <div className="w-[35%] h-[200px] flex justify-center items-center">
-        <img src={IF + post.photo} alt="" className="h-full w-full object-cover rounded-lg"/>
+        {/* <img src={IF + post.photo} alt="" className="h-full w-full object-cover rounded-lg"/> */}
+
+        <img src={imageUrl} alt={post.title || 'Post Image'} className="h-full w-full object-cover rounded-lg" />
       </div>
       
      

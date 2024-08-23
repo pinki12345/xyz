@@ -5,13 +5,13 @@ import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
 import verifyToken from '../verifyToken.js';
 
+
 const router = express.Router();
 
 // CREATE
-router.post('/create', verifyToken, async (req, res) => {
+router.post('/create', async (req, res) => {
   try {
     const newPost = new Post(req.body);
-    // console.log(req.body)
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
   } catch (err) {
@@ -19,6 +19,34 @@ router.post('/create', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Server error occurred while creating post.' });
   }
 });
+
+
+// router.post('/create', verifyToken, upload.single('photo'), async (req, res) => {
+//   try {
+//     const { title, desc, username, userId, categories } = req.body;
+    
+//     // Check if a file was uploaded and get its filename
+//     const photo = req.file ? req.file.filename : null;
+    
+//     // Create a new post object
+//     const newPost = new Post({
+//       title,
+//       desc,
+//       photo, // Include the filename in the post
+//       username,
+//       userId,
+//       categories: categories ? categories.split(',') : []
+//     });
+
+//     // Save the post to the database
+//     const savedPost = await newPost.save();
+//     res.status(200).json(savedPost);
+//   } catch (err) {
+//     console.error('Error creating post:', err);
+//     res.status(500).json({ message: 'Server error occurred while creating post.' });
+//   }
+// });
+
 
 // UPDATE
 router.put('/:id', verifyToken, async (req, res) => {
@@ -84,5 +112,8 @@ router.get('/user/:userId', async (req, res) => {
     res.status(500).json({ message: 'Server error occurred while fetching user posts.' });
   }
 });
+
+
+
 
 export default router;
